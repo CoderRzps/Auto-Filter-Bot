@@ -1,7 +1,7 @@
 import os
 import time
 import asyncio
-import uvloop
+#import uvloop
 
 # pyrogram imports
 from pyrogram import types
