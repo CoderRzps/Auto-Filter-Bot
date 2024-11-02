@@ -25,25 +25,12 @@ class Media(Document):
         collection_name = COLLECTION_NAME
 
 async def save_file(media):
-    """Save file in database with automatic deletion of older versions"""
+    """Save file in database"""
 
-    # Extract file_id, file_name, and caption
+    # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id = unpack_new_file_id(media.file_id)
     file_name = re.sub(r"@\w+|(_|\-|\.|\+)", " ", str(media.file_name))
     file_caption = re.sub(r"@\w+|(_|\-|\.|\+)", " ", str(media.caption))
-    
-    # Check if the file is an HD version
-    if "hd" in file_name.lower():
-        # Search for any existing lower-quality versions (e.g., "Holl Dubbed") of the same movie
-        old_filter = {"file_name": re.compile(re.escape(file_name), re.IGNORECASE), "file_name": {"$regex": "holl dubbed"}}
-        old_files = Media.find(old_filter)
-
-        # Delete all matching older entries
-        async for old_file in old_files:
-            await Media.delete_one({"_id": old_file.file_id})
-            print(f"Deleted old dubbed version - {old_file.file_name}")
-
-    # Now proceed to save the new HD file entry
     try:
         file = Media(
             file_id=file_id,
