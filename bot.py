@@ -23,7 +23,7 @@ from database.ia_filterdb import Media
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-uvloop.install()
+#uvloop.install()
 
 class Bot(Client):
     def __init__(self):
