@@ -2,12 +2,15 @@ import logging
 import asyncio
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait
-from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid, ChatAdminRequired, UsernameInvalid, UsernameNotModified, UserIsBlocked
+from pyrogram.errors.exceptions.bad_request_400 import UsernameInvalid, UsernameNotModified, UserIsBlocked
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
 from info import ADMINS, LOG_CHANNEL, INDEX_EXTENSIONS
 from database.ia_filterdb import save_file
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from utils import temp, get_readable_time
 import re, time
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 lock = asyncio.Lock()
 
